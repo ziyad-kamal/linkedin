@@ -1,0 +1,158 @@
+/* ── Minimal CSS — only what Bootstrap cannot do ── */
+:root {
+    --li-blue: #0a66c2;
+    --li-gold: #b24020;
+}
+
+body {
+    background: #f3f2ef;
+}
+
+/* Vertical nav item with bottom-border active indicator */
+.li-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 68px;
+    height: 52px;
+    padding: 0 8px;
+    font-size: 0.7rem;
+    color: #666;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    gap: 2px;
+    transition:
+        color 0.15s,
+        border-color 0.15s;
+    cursor: pointer;
+}
+
+.li-nav-item:hover,
+.li-nav-item.show {
+    color: #111;
+    border-bottom-color: #111;
+}
+
+.li-nav-item.active {
+    color: #111;
+    border-bottom-color: #111;
+    font-weight: 600;
+}
+
+.li-nav-item .icon {
+    font-size: 1.35rem;
+    line-height: 1;
+    position: relative;
+}
+
+/* Small avatars */
+.li-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #a0b4c8, #6e8fa8);
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.li-avatar-lg {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #a0b4c8, #6e8fa8);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+/* Search */
+.li-search {
+    width: 220px;
+    background: #eef3f8;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    height: 34px;
+    font-size: 0.875rem;
+    padding-left: 34px;
+    transition:
+        border-color 0.15s,
+        background 0.15s;
+}
+
+.li-search:focus {
+    background: #fff;
+    border-color: var(--li-blue);
+    box-shadow: none;
+    outline: none;
+}
+
+/* Me dropdown panel width */
+.me-menu {
+    width: 300px;
+}
+
+/* Premium golden badge */
+.premium-badge {
+    font-size: 0.62rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #c37d16, #e8a820);
+    color: #fff;
+    padding: 1px 5px;
+    border-radius: 3px;
+}
+
+/* Mobile bottom nav */
+.mob-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 52px;
+    background: #fff;
+    border-top: 1px solid #e0dfdc;
+    z-index: 1030;
+}
+
+.mob-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    color: #666;
+    text-decoration: none;
+    gap: 2px;
+    border-top: 2px solid transparent;
+}
+
+.mob-item.active {
+    color: #111;
+    border-top-color: #111;
+}
+
+.mob-item i {
+    font-size: 1.3rem;
+}
+
+@media (max-width: 767px) {
+    .desktop-nav {
+        display: none !important;
+    }
+
+    .mob-nav {
+        display: flex;
+    }
+
+    .li-search {
+        width: 140px;
+    }
+}
+
+@media (max-width: 480px) {
+    .li-search {
+        width: 110px;
+    }
+}

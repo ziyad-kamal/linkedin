@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LinkedIn Navbar</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+
+<body>
+
+    <!--  NAVBAR -->
+    <nav class="navbar bg-white border-bottom sticky-top py-0" style="height:52px;">
+        <div class="d-flex align-items-center h-100 gap-1 px-2 px-md-3 w-100" style="max-width:1128px; margin:0 auto;">
+
+            <a href="#" class="text-decoration-none me-1 lh-1 flex-shrink-0"
+                style="color:var(--li-blue); font-size:1.9rem;">
+                <i class="bi bi-linkedin"></i>
+            </a>
+
+            <div class="position-relative flex-shrink-0">
+                <i class="bi bi-search position-absolute top-50 translate-middle-y text-secondary ps-2"
+                    style="left:2px; font-size:.9rem; pointer-events:none;"></i>
+                <input type="text" class="form-control li-search" placeholder="Search" />
+            </div>
+
+            <div class="flex-grow-1"></div>
+
+            <div class="desktop-nav d-flex align-items-stretch h-100">
+
+                <a href="#" class="li-nav-item active">
+                    <span class="icon"><i class="bi bi-house-fill"></i></span>
+                    <span>Home</span>
+                </a>
+
+                <a href="#" class="li-nav-item">
+                    <span class="icon"><i class="bi bi-people"></i></span>
+                    <span>My Network</span>
+                </a>
+
+                <a href="#" class="li-nav-item">
+                    <span class="icon"><i class="bi bi-briefcase"></i></span>
+                    <span>Jobs</span>
+                </a>
+
+                <a href="#" class="li-nav-item">
+                    <span class="icon"><i class="bi bi-chat-square-dots"></i></span>
+                    <span>Messaging</span>
+                </a>
+
+                <a href="#" class="li-nav-item">
+                    <span class="icon position-relative">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge bg-danger rounded-pill position-absolute top-0 end-0"
+                            style="font-size:.5rem; padding:3px 4px; transform:translate(40%,-20%);">11</span>
+                    </span>
+                    <span>Notifications</span>
+                </a>
+
+                <!-- ── Me — BS5 dropdown ── -->
+                <div class="dropdown d-flex align-items-stretch">
+                    <a href="#" class="li-nav-item" data-bs-toggle="dropdown" data-bs-offset="0,4"
+                        aria-expanded="false">
+                        <span class="icon d-flex align-items-center justify-content-center">
+                            <div
+                                class="li-avatar d-flex align-items-center justify-content-center text-white abbr_name">
+                            </div>
+                        </span>
+                        <span class="d-flex align-items-center gap-1">
+                            Me <i class="bi bi-chevron-down" style="font-size:.48rem;"></i>
+                        </span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end border shadow-lg p-0 mt-0 me-menu"
+                        style="border-radius:6px; overflow:hidden;">
+
+                        <li class="px-3 pt-3 pb-2 border-bottom">
+                            <div class="d-flex align-items-center gap-3 mb-2">
+                                <div
+                                    class="li-avatar-lg d-flex align-items-center justify-content-center text-white flex-shrink-0 abbr_name">
+                                </div>
+                                <div>
+                                    <div class="fw-semibold text-dark lh-sm fs-6" id="username">
+                                    </div>
+                                    <!-- <div class="text-muted lh-sm mt-1 fs-6" id="job_address">Frontend Developer ·
+                                        Cairo, Egypt</div> -->
+                                </div>
+                            </div>
+                            <a href="#" class="btn btn-light w-100 rounded-pill fw-semibold fs-6"
+                                border-color:var(--li-blue); color:var(--li-blue);">
+                                View Profile
+                            </a>
+                        </li>
+
+                        <li class="border-bottom py-2">
+                            <h6 class="dropdown-header fw-semibold text-dark px-3 pb-1 mb-0 fs-6">
+                                Account</h6>
+                            <a href="#" class="dropdown-item d-flex align-items-center gap-2 py-2 px-3 fs-6">
+                                <i class="bi bi-star-fill" style="color:#c37d16;"></i>
+                                Try Premium for free
+                                <span class="premium-badge ms-auto">FREE</span>
+                            </a>
+                            <a href="#" class="dropdown-item py-2 px-3 fs-6">Settings &amp;
+                                Privacy</a>
+                            <a href="#" class="dropdown-item py-2 px-3 fs-6" ">Help</a>
+                            <a href=" #" class="dropdown-item py-2 px-3 fs-6">Language</a>
+                        </li>
+
+                        <li class="border-bottom py-2">
+                            <h6 class="dropdown-header fw-semibold text-dark px-3 pb-1 mb-0" style="font-size:.8rem;">
+                                Manage</h6>
+                            <a href="#" class="dropdown-item py-2 px-3 fs-6">Posts &amp;
+                                Activity</a>
+                            <a href="#" class="dropdown-item py-2 px-3 fs-6">Job Posting
+                                Account</a>
+                        </li>
+
+                        <!-- Sign out -->
+                        <li class="py-1">
+                            <a href="#" class="dropdown-item py-2 px-3" id="signout" style="font-size:.85rem;">Sign
+                                Out</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="vr mx-2 align-self-center opacity-25" style="height:32px;"></div>
+
+                <div class="dropdown d-flex align-items-stretch">
+                    <a href="#" class="li-nav-item" data-bs-toggle="dropdown" data-bs-offset="0,4"
+                        aria-expanded="false">
+                        <span class="icon"><i class="bi bi-grid-3x3-gap"></i></span>
+                        <span class="d-flex align-items-center gap-1">
+                            For Business <i class="bi bi-chevron-down" style="font-size:.48rem;"></i>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end border shadow p-2" style="min-width:200px;">
+                        <li><a href="#" class="dropdown-item rounded py-2" style="font-size:.85rem;"><i
+                                    class="bi bi-megaphone me-2 text-muted"></i>Advertise</a></li>
+                        <li><a href="#" class="dropdown-item rounded py-2" style="font-size:.85rem;"><i
+                                    class="bi bi-briefcase me-2 text-muted"></i>Post a Job</a></li>
+                        <li><a href="#" class="dropdown-item rounded py-2" style="font-size:.85rem;"><i
+                                    class="bi bi-graph-up me-2 text-muted"></i>Sales Solutions</a></li>
+                        <li><a href="#" class="dropdown-item rounded py-2" style="font-size:.85rem;"><i
+                                    class="bi bi-people me-2 text-muted"></i>Talent Solutions</a></li>
+                        <li><a href="#" class="dropdown-item rounded py-2" style="font-size:.85rem;"><i
+                                    class="bi bi-book me-2 text-muted"></i>Learning</a></li>
+                    </ul>
+                </div>
+
+                <!-- Premium link -->
+                <a href="#" class="d-flex align-items-center px-2 text-decoration-none fw-semibold lh-sm text-center"
+                    style="font-size:.78rem; max-width:88px; color:var(--li-gold);">
+                    Try Premium for EGP0
+                </a>
+
+            </div><!-- /desktop-nav -->
+
+        </div>
+    </nav>
+
+    <!-- ══════════════════════ MOBILE BOTTOM NAV ══════════════════════ -->
+    <div class="mob-nav">
+        <a href="#" class="mob-item active"><i class="bi bi-house-fill"></i><span>Home</span></a>
+        <a href="#" class="mob-item"><i class="bi bi-people"></i><span>Network</span></a>
+        <a href="#" class="mob-item"><i class="bi bi-briefcase"></i><span>Jobs</span></a>
+        <a href="#" class="mob-item"><i class="bi bi-chat-square-dots"></i><span>Messaging</span></a>
+        <a href="#" class="mob-item">
+            <span class="position-relative d-inline-flex">
+                <i class="bi bi-bell" style="font-size:1.3rem;"></i>
+                <span class="badge bg-danger rounded-pill position-absolute top-0 end-0"
+                    style="font-size:.48rem; padding:2px 4px; transform:translate(50%,-25%);">11</span>
+            </span>
+            <span>Alerts</span>
+        </a>
+    </div>
+
+    <!-- Demo content -->
+    <div class="py-4 px-3 text-muted small" style="max-width:1128px; margin:0 auto;">
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/general.js"></script>
+
+    <script src="/js/navbar.js"></script>
+</body>
+
+</html>

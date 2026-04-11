@@ -1,0 +1,167 @@
+:root {
+    --li-blue: #0a66c2;
+    --li-dark: #004182;
+    --li-bg: #f3f2ef;
+    --li-border: #c5c5c5;
+}
+
+body {
+    background-color: var(--li-bg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ── NAV ── */
+.li-nav .navbar-brand {
+    color: var(--li-blue);
+    font-size: 2rem;
+}
+
+.li-nav .nav-link {
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.li-nav .btn-join {
+    border: 1px solid #333;
+    border-radius: 1.5rem;
+    font-size: 0.9rem;
+    padding: 0.4rem 1.1rem;
+    color: #333;
+}
+
+.li-nav .btn-join:hover {
+    background: #e8e8e8;
+}
+
+/* ── HERO / TAGLINE ── */
+.hero-tagline {
+    font-family: "Source Serif 4", Georgia, serif;
+    font-size: clamp(1.6rem, 4vw, 3rem);
+    font-style: italic;
+    color: #7a4f29;
+    line-height: 1.25;
+    white-space: nowrap;
+}
+
+.hero-img {
+    width: 100%;
+    max-width: 480px;
+    border-radius: 0.5rem;
+    object-fit: cover;
+}
+
+/* ── LOGIN CARD ── */
+.login-card {
+    background: #fff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    padding: 2rem 2.25rem;
+    max-width: 400px;
+    width: 100%;
+}
+
+.login-card h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.btn-social {
+    border: 1px solid var(--li-border);
+    border-radius: 1.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.55rem 1rem;
+    background: #fff;
+    color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background 0.15s;
+}
+
+small {
+    color: red;
+}
+
+.btn-social:hover {
+    background: #f5f5f5;
+}
+
+.divider-text {
+    font-size: 0.8rem;
+    color: #777;
+    position: relative;
+    text-align: center;
+}
+
+.divider-text::before,
+.divider-text::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 43%;
+    height: 1px;
+    background: var(--li-border);
+}
+
+.divider-text::before {
+    left: 0;
+}
+
+.divider-text::after {
+    right: 0;
+}
+
+.form-control:focus {
+    border-color: var(--li-blue);
+    box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.15);
+}
+
+.form-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.btn-signin {
+    background: var(--li-blue);
+    color: #fff;
+    border-radius: 1.5rem;
+    font-weight: 600;
+    padding: 0.65rem;
+    border: none;
+    transition: background 0.2s;
+}
+
+.btn-signin:hover {
+    background: var(--li-dark);
+    color: #fff;
+}
+
+.forgot-link {
+    font-size: 0.85rem;
+    color: var(--li-blue);
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+}
+
+.join-link {
+    color: var(--li-blue);
+    font-weight: 600;
+}
+
+.join-link:hover {
+    text-decoration: underline;
+}
+
+/* ── FOOTER ── */
+footer a {
+    color: #555;
+    font-size: 0.8rem;
+}
+
+footer a:hover {
+    color: var(--li-blue);
+}
