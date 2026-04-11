@@ -7,7 +7,11 @@ document.getElementById("signout").onclick = function () {
 
 var authUser = getFromDatabase("authUser");
 var username = authUser.name;
-document.getElementById("username").innerText = username;
+var userNameElements = document.getElementsByClassName("username");
+for (let index = 0; index < userNameElements.length; index++) {
+    const userNameElement = userNameElements[index];
+    userNameElement.textContent = username;
+}
 
 var abbrNameEle = document.getElementsByClassName("abbr_name");
 for (var index = 0; index < abbrNameEle.length; index++) {
