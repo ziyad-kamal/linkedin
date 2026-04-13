@@ -1,16 +1,12 @@
-document.getElementsByClassName("start-post")[0].onclick = function () {
-    new bootstrap.Modal(document.getElementById("postModal")).show();
-    setTimeout(() => {
-        document.getElementById("postTextarea").focus();
-    }, 500);
-};
+function initializePage() {
+    if (!authorize()) {
+        return;
+    }
 
-var posts = getFromDatabase("posts");
-var authUser = getFromDatabase("authUser");
+    var postModal = new bootstrap.Modal(document.getElementById("postModal"));
 
-for (var index = 0; index < posts.length; index++) {
-    var post = posts[index];
-    var postCard = `  <div class="card post-card shadow-sm border-0 mt-3">
+    function insertPostCard(post) {
+        var postCard = ` <div class="card post-card shadow-sm border-0 mt-3 " id="post${post.id}">
 
                     <div class="card-body p-3">
 
@@ -32,9 +28,38 @@ for (var index = 0; index < posts.length; index++) {
                                 </div>
                             </div>
 
-                            <button class="btn-connect ms-auto">
-                                <index class="bi bi-person-plus-fill"></index> Connect
-                            </button>
+                            <div class="d-flex align-items-center gap-2 ms-auto">
+                                <button class="btn-connect">
+                                    <i class="bi bi-person-plus-fill"></i> Connect
+                                </button>
+
+                                <div class="dropdown">
+                                    <button class="post-dots-btn" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span class="dots-icon"></span>
+                                        <span class="dots-icon"></span>
+                                        <span class="dots-icon"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end shadow border"
+                                        style="min-width:160px; border-radius:6px; overflow:hidden;">
+                                        <li>
+                                            <button class="dropdown-item d-flex align-items-center gap-2 py-2 px-3"
+                                            data-postOwnerId="${post.user.id}" data-postId="${post.id}" data-bs-toggle="modal" 
+                                            data-bs-target="#editModal" id="editPostBtn">
+                                                <i class="bi bi-pencil-fill text-muted"></i>
+                                                    Edit post
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button
+                                                class="dropdown-item d-flex align-items-center gap-2 py-2 px-3 text-danger deletePostBtn"
+                                                data-postOwnerId="${post.user.id}" data-postId="${post.id}" id="deletePostBtn" 
+                                                data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                                <i class="bi bi-trash-fill"></i> Delete post
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
 
                         <p class="post-body mb-1">
@@ -76,99 +101,163 @@ for (var index = 0; index < posts.length; index++) {
 
                 </div>`;
 
-    document.getElementById("posts_parent").insertAdjacentHTML("afterbegin", postCard);
-}
-
-document.getElementById("post_btn").onclick = function () {
-    if (!getFromDatabase("token")) {
-        return;
-    }
-    var posts = getFromDatabase("posts");
-
-    var content = document.getElementById("postTextarea").value;
-    var id = posts.length + 1;
-    var authUser = getFromDatabase("authUser");
-
-    if (content.length < 4) {
-        document.getElementById("content_error").textContent = "you should enter at least 3 characters";
-        return;
+        document.getElementById("posts_parent").insertAdjacentHTML("afterbegin", postCard);
     }
 
-    var newPost = {
-        id: id,
-        content: content,
-        user: authUser,
+    var posts = getFromDatabase("posts") || [];
+    for (var index = 0; index < posts.length; index++) {
+        insertPostCard(posts[index]);
+    }
+
+    //################  add  #######################
+
+    document.getElementById("post_btn").onclick = function () {
+        if (!authorize()) {
+            return;
+        }
+        var posts = getFromDatabase("posts") || [];
+
+        var content = document.getElementById("postTextarea").value;
+        var id = posts.length + 1;
+        var authUser = getFromDatabase("authUser");
+
+        if (content.length < 4) {
+            document.getElementById("content_error").textContent = "you should enter at least 3 characters";
+            return;
+        }
+
+        var newPost = {
+            id: id,
+            content: content,
+            user: authUser,
+        };
+
+        posts.push(newPost);
+
+        saveOnDatabase("posts", posts);
+        postModal.hide();
+
+        insertPostCard(newPost);
     };
 
-    posts.push(newPost);
-    console.log("posts: ", posts);
+    //################  edit  #######################
+    var updateBtnModal = document.getElementById("updateBtnModal");
+    function editEventHandler(e) {
+        if (e.target.id === "editPostBtn") {
+            var postOwnerId = e.target.getAttribute("data-postOwnerId");
+            var postId = e.target.getAttribute("data-postId");
 
-    saveOnDatabase("posts", posts);
-    var postCard = `  <div class="card post-card shadow-sm border-0 mt-3">
+            updateBtnModal.setAttribute("data-postOwnerId", postOwnerId);
+            updateBtnModal.setAttribute("data-postId", postId);
 
-                    <div class="card-body p-3">
+            var originalContent = document.querySelector(`#post${postId} .post-body`).innerText;
+            console.log("originalContent: ", originalContent);
+            document.querySelector(`#editTextarea`).value = originalContent;
+        }
+    }
+    document.getElementById("posts_parent").addEventListener("click", editEventHandler);
 
-                        <div class="d-flex align-items-start gap-2 mb-2">
+    updateBtnModal.addEventListener("click", function () {
+        if (!authorize()) {
+            return;
+        }
 
-                            <div class="avatar-wrap flex-shrink-0">
-                                <div class="av-placeholder">${authUser.name.charAt(0).toUpperCase()}</div>
-                                <div class="avatar-badge"><index class="bi bi-buildings-fill"></index></div>
-                            </div>
+        var postOwnerId = updateBtnModal.getAttribute("data-postOwnerId");
+        var postId = updateBtnModal.getAttribute("data-postId");
 
-                            <div class="flex-grow-1 overflow-hidden">
-                                <div class="d-flex align-items-center gap-1 flex-wrap">
-                                    <span class="poster-name">${authUser.name}</span>
-                                    <span class="poster-meta">• 2 days</span>
-                                </div>
+        if (!isOwner(postOwnerId)) {
+            return;
+        }
 
-                                <div class="poster-meta">18h · Edited · <index class="bi bi-globe2"
-                                        style="font-size:.75rem;"></index>
-                                </div>
-                            </div>
+        var content = document.querySelector(`#editTextarea`).value;
+        var errorInputEle = document.getElementById("edit_content_error");
+        if (content.length < 4) {
+            errorInputEle.style.display = "";
+            errorInputEle.innerText = "you should enter at least 4 characters";
+        }
 
-                            <button class="btn-connect ms-auto">
-                                <index class="bi bi-person-plus-fill"></index> Connect
-                            </button>
-                        </div>
+        var errorEle = document.getElementById("msg_error");
+        var posts = getFromDatabase("posts") || [];
+        for (let index = 0; index < posts.length; index++) {
+            const post = posts[index];
 
-                        <p class="post-body mb-1">
-                            ${content}
-                        </p>
+            if (post.id === Number(postId)) {
+                post.content = content;
+                break;
+            }
 
-                    </div><!-- /card-body -->
+            if (posts.length - 1 === index) {
+                errorEle.style.display = "";
+                errorEle.innerText = "post not found";
+                return;
+            }
+        }
 
+        saveOnDatabase("posts", posts);
 
-                    <!-- Reactions + counts -->
-                    <div class="px-3 py-2 d-flex align-items-center justify-content-between border-bottom post-divider"
-                        style="margin:0;">
+        document.querySelector(`#post${postId} .post-body`).innerText = content;
 
-                        <div class="d-flex gap-2">
-                            <span class="reaction-count"><span class="comments_count">0</span> comments</span>
-                            <span class="text-muted" style="font-size:.82rem;">•</span>
-                            <span class="reaction-count"><span class="reposts_count">0</span> reposts</span>
-                            <span class="text-muted" style="font-size:.82rem;">•</span>
-                            <span class="reaction-count"><span class="likes_count">0</span> likes</span>
-                        </div>
-                    </div>
+        var successEle = document.getElementById("edit_msg_success");
+        successEle.style.display = "";
+        successEle.innerText = "you updated post successfully";
+        setTimeout(function () {
+            successEle.style.display = "none";
+        }, 3000);
+    });
 
-                    <!-- Action buttons row -->
-                    <div class="d-flex px-1 py-1">
-                        <button class="post-action">
-                            <index class="bi bi-hand-thumbs-up"></index>
-                            <span>Like</span>
-                        </button>
-                        <button class="post-action">
-                            <index class="bi bi-chat-square"></index>
-                            <span>Comment</span>
-                        </button>
-                        <button class="post-action">
-                            <index class="bi bi-repeat"></index>
-                            <span>Repost</span>
-                        </button>
+    //################  delete  #######################
+    var deleteBtnModal = document.getElementById("deleteBtnModal");
+    function deleteEventHandler(e) {
+        if (e.target.id === "deletePostBtn") {
+            var postOwnerId = e.target.getAttribute("data-postOwnerId");
+            var postId = e.target.getAttribute("data-postId");
 
-                    </div>
+            deleteBtnModal.setAttribute("data-postOwnerId", postOwnerId);
+            deleteBtnModal.setAttribute("data-postId", postId);
+        }
+    }
+    document.getElementById("posts_parent").addEventListener("click", deleteEventHandler);
 
-                </div>`;
+    deleteBtnModal.addEventListener("click", function () {
+        if (!authorize()) {
+            return;
+        }
 
-    document.getElementById("posts_parent").insertAdjacentHTML("afterbegin", postCard);
-};
+        var postOwnerId = deleteBtnModal.getAttribute("data-postOwnerId");
+        var postId = deleteBtnModal.getAttribute("data-postId");
+        var errorEle = document.getElementById("msg_error");
+
+        if (!isOwner(postOwnerId)) {
+            return;
+        }
+
+        var posts = getFromDatabase("posts") || [];
+        for (let index = 0; index < posts.length; index++) {
+            const post = posts[index];
+
+            if (post.id === Number(postId)) {
+                posts.splice(index);
+                break;
+            }
+
+            if (posts.length - 1 === index) {
+                errorEle.style.display = "";
+                errorEle.innerText = "post not found";
+                return;
+            }
+        }
+
+        saveOnDatabase("posts", posts);
+
+        var successEle = document.getElementById("msg_success");
+        successEle.style.display = "";
+        successEle.innerText = "you deleted post successfully";
+        setTimeout(function () {
+            successEle.style.display = "none";
+        }, 3000);
+
+        document.getElementById(`post${postId}`).remove();
+    });
+}
+
+document.addEventListener("DOMContentLoaded", initializePage);

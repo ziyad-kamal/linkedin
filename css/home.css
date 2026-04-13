@@ -275,3 +275,29 @@ small {
     background: #ebf3fc !important;
     color: var(--li-blue) !important;
 }
+
+.post-dots-btn {
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.post-dots-btn:hover {
+    background: #f0f0f0;
+}
+
+.dots-icon {
+    display: block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #666;
+}

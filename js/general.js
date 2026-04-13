@@ -42,7 +42,7 @@ function saveOnDatabase(Key, value) {
 }
 
 function getFromDatabase(Key) {
-    return JSON.parse(localStorage.getItem(Key));
+    return JSON.parse(localStorage.getItem(Key)) ?? false;
 }
 
 function generateToken(length = 60) {
@@ -55,4 +55,22 @@ function generateToken(length = 60) {
     }
 
     return result;
+}
+
+function authorize() {
+    if (!getFromDatabase("token")) {
+        window.location.href = "http://127.0.0.1:5500/views/login.html";
+
+        return false;
+    }
+    return true;
+}
+
+function isOwner(recordId) {
+    var authUser = getFromDatabase("authUser");
+    if (authUser.id !== Number(recordId)) {
+        errorEle.innerText = "something went wrong";
+        return false;
+    }
+    return true;
 }
