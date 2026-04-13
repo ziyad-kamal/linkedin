@@ -4,7 +4,7 @@ function initializePage() {
     }
 
     var postModal = new bootstrap.Modal(document.getElementById("postModal"));
-
+    var authUser = getFromDatabase("authUser");
     function insertPostCard(post) {
         var postCard = ` <div class="card post-card shadow-sm border-0 mt-3 " id="post${post.id}">
 
@@ -74,26 +74,30 @@ function initializePage() {
                         style="margin:0;">
 
                         <div class="d-flex gap-2">
+                            <span class="reaction-count"><span class="likes_count">${post.likes.length}</span> likes </span>
+                                                        
+                            <span class="text-muted" style="font-size:.82rem;">•</span>
+
                             <span class="reaction-count"><span class="comments_count">0</span> comments</span>
                             <span class="text-muted" style="font-size:.82rem;">•</span>
-                            <span class="reaction-count"><span class="reposts_count">0</span> reposts</span>
-                            <span class="text-muted" style="font-size:.82rem;">•</span>
-                            <span class="reaction-count"><span class="likes_count">0</span> likes</span>
+
+                            <span class="reaction-count"><span class="reposts_count">${post.reposts.length}</span> reposts</span>
+
                         </div>
                     </div>
 
                     <!-- Action buttons row -->
                     <div class="d-flex px-1 py-1">
-                        <button class="post-action">
-                            <index class="bi bi-hand-thumbs-up"></index>
-                            <span>Like</span>
+                        <button class="post-action" id="like" style="${post.likes.includes(authUser.id) ? "color:blue" : ""}"   data-postId="${post.id}">
+                            <index class="bi bi-hand-thumbs-up-fill" ></index>
+                            <span >Like</span>
                         </button>
                         <button class="post-action">
                             <index class="bi bi-chat-square"></index>
                             <span>Comment</span>
                         </button>
-                        <button class="post-action">
-                            <index class="bi bi-repeat"></index>
+                        <button class="post-action" id="repost" data-postId="${post.id}">
+                            <index class="bi bi-repeat"   ></index>
                             <span>Repost</span>
                         </button>
 
@@ -130,6 +134,9 @@ function initializePage() {
             id: id,
             content: content,
             user: authUser,
+            likes: [],
+            reposts: [],
+            comments: [],
         };
 
         posts.push(newPost);
@@ -178,8 +185,8 @@ function initializePage() {
 
         var errorEle = document.getElementById("msg_error");
         var posts = getFromDatabase("posts") || [];
-        for (let index = 0; index < posts.length; index++) {
-            const post = posts[index];
+        for (var index = 0; index < posts.length; index++) {
+            var post = posts[index];
 
             if (post.id === Number(postId)) {
                 post.content = content;
@@ -232,8 +239,8 @@ function initializePage() {
         }
 
         var posts = getFromDatabase("posts") || [];
-        for (let index = 0; index < posts.length; index++) {
-            const post = posts[index];
+        for (var index = 0; index < posts.length; index++) {
+            var post = posts[index];
 
             if (post.id === Number(postId)) {
                 posts.splice(index);
@@ -258,6 +265,94 @@ function initializePage() {
 
         document.getElementById(`post${postId}`).remove();
     });
+
+    //################  like  #######################
+    function likeEventHandler(e) {
+        if (!authorize()) {
+            return;
+        }
+
+        if (e.target.id === "like") {
+            var postId = e.target.getAttribute("data-postId");
+            var posts = getFromDatabase("posts");
+            var authUser = getFromDatabase("authUser");
+            var likeIcon = document.getElementById("like");
+            var likes;
+
+            for (var index = 0; index < posts.length; index++) {
+                var post = posts[index];
+
+                if (post.id === Number(postId)) {
+                    likes = post.likes;
+                    if (likes.includes(authUser.id)) {
+                        for (var i = 0; i < likes.length; i++) {
+                            var like = likes[i];
+                            if (like === authUser.id) {
+                                likes.splice(i);
+                                likeIcon.style.color = "";
+                                break;
+                            }
+                        }
+                    } else {
+                        likes.push(authUser.id);
+                        likeIcon.style.color = "blue";
+                        break;
+                    }
+                }
+
+                if (posts.length - 1 === index) {
+                    return;
+                }
+            }
+
+            document.querySelector(`#post${postId} .likes_count`).innerText = likes.length;
+            saveOnDatabase("posts", posts);
+        }
+    }
+    document.getElementById("posts_parent").addEventListener("click", likeEventHandler);
+
+    //################  repost  #######################
+    function repostEventHandler(e) {
+        if (!authorize()) {
+            return;
+        }
+
+        if (e.target.id === "repost") {
+            var postId = e.target.getAttribute("data-postId");
+            var posts = getFromDatabase("posts");
+            var authUser = getFromDatabase("authUser");
+            var repostIcon = document.getElementById("repost");
+            var reposts;
+
+            for (var index = 0; index < posts.length; index++) {
+                var post = posts[index];
+
+                if (post.id === Number(postId)) {
+                    reposts = post.reposts;
+                    if (reposts.includes(authUser.id)) {
+                        for (var i = 0; i < reposts.length; i++) {
+                            var repost = reposts[i];
+                            if (repost === authUser.id) {
+                                reposts.splice(i);
+                                repostIcon.style.color = "";
+                            }
+                        }
+                    } else {
+                        reposts.push(authUser.id);
+                        repostIcon.style.color = "blue";
+                    }
+                }
+
+                if (posts.length - 1 === index) {
+                    return;
+                }
+            }
+
+            // document.querySelector(`#post${postId} .reposts_count`).innerText = reposts.length;
+            saveOnDatabase("posts", posts);
+        }
+    }
+    document.getElementById("posts_parent").addEventListener("click", repostEventHandler);
 }
 
 document.addEventListener("DOMContentLoaded", initializePage);

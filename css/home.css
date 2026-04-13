@@ -301,3 +301,17 @@ small {
     border-radius: 50%;
     background: #666;
 }
+
+/* #likeIcon,
+#likeText {
+    pointer-events: none;
+} */
+#like i,
+#like span {
+    pointer-events: none;
+}
+
+#repost i,
+#repost span {
+    pointer-events: none;
+}

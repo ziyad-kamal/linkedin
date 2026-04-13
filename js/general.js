@@ -32,8 +32,8 @@ var posts = [
                 },
             },
         ],
-        reposts: 4,
-        likes: 10,
+        likes: [1],
+        reposts: [1],
     },
 ];
 
