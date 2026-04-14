@@ -299,10 +299,6 @@ function initializePage() {
                         break;
                     }
                 }
-
-                if (posts.length - 1 === index) {
-                    return;
-                }
             }
 
             document.querySelector(`#post${postId} .likes_count`).innerText = likes.length;
@@ -342,13 +338,9 @@ function initializePage() {
                         repostIcon.style.color = "blue";
                     }
                 }
-
-                if (posts.length - 1 === index) {
-                    return;
-                }
             }
 
-            // document.querySelector(`#post${postId} .reposts_count`).innerText = reposts.length;
+            document.querySelector(`#post${postId} .reposts_count`).innerText = reposts.length;
             saveOnDatabase("posts", posts);
         }
     }
