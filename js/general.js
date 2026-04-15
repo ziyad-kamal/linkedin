@@ -5,6 +5,7 @@ var users = [
         email: "ziyad1995@gmail.com",
         password: "13131313",
         phone: "01124732412",
+        skills: [],
     },
 ];
 

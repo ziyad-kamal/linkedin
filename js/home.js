@@ -5,7 +5,7 @@ function initializePage() {
 
     var postModal = new bootstrap.Modal(document.getElementById("postModal"));
     var authUser = getFromDatabase("authUser");
-    function insertPostCard(post) {
+    function displayPost(post) {
         var postCard = ` <div class="card post-card shadow-sm border-0 mt-3 " id="post${post.id}">
 
                     <div class="card-body p-3">
@@ -110,7 +110,7 @@ function initializePage() {
 
     var posts = getFromDatabase("posts") || [];
     for (var index = 0; index < posts.length; index++) {
-        insertPostCard(posts[index]);
+        displayPost(posts[index]);
     }
 
     //################  add  #######################
@@ -144,7 +144,7 @@ function initializePage() {
         saveOnDatabase("posts", posts);
         postModal.hide();
 
-        insertPostCard(newPost);
+        displayPost(newPost);
     };
 
     //################  edit  #######################
