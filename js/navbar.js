@@ -20,3 +20,10 @@ if (authorize()) {
         element.textContent = username.charAt(0).toUpperCase();
     }
 }
+
+var authUser = getFromDatabase("authUser");
+var navProfile = `<a href="/views/profile.html?id=${authUser.id}" class="btn btn-light w-100 rounded-pill fw-semibold fs-6"
+                                border-color:var(--li-blue); color:var(--li-blue);">
+                                View Profile
+                            </a>`;
+document.getElementsByClassName("profile")[0].insertAdjacentHTML("beforeend", navProfile);

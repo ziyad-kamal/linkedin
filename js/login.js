@@ -1,5 +1,5 @@
 function initializePage() {
-    if (!authorize()) {
+    if (!redirectIfAuth()) {
         return;
     }
     var signinBtn = document.getElementById("signin");
@@ -21,6 +21,8 @@ function initializePage() {
                     name: user.name,
                     email: email,
                     password: password,
+                    skills: [],
+                    connections: [],
                 };
                 saveOnDatabase("token", token);
                 saveOnDatabase("authUser", authUser);

@@ -1,5 +1,5 @@
 function initializePage() {
-    if (!authorize()) {
+    if (!redirectIfAuth()) {
         return;
     }
 
@@ -56,6 +56,8 @@ function initializePage() {
             email: email,
             phone: phone,
             password: password,
+            skills: [],
+            connections: [],
         };
 
         users.push(newUser);

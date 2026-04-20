@@ -110,6 +110,10 @@ body {
     color: #fff;
 }
 
+.profile_link {
+    text-decoration: none;
+}
+
 /* ── Post card ── */
 .post-card {
     border-radius: 8px;

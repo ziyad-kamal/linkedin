@@ -33,7 +33,7 @@
 
             <div class="desktop-nav d-flex align-items-stretch h-100">
 
-                <a href="#" class="li-nav-item active">
+                <a href="/views/home.html" class="li-nav-item active">
                     <span class="icon"><i class="bi bi-house-fill"></i></span>
                     <span>Home</span>
                 </a>
@@ -79,7 +79,7 @@
                     <ul class="dropdown-menu dropdown-menu-end border shadow-lg p-0 mt-0 me-menu"
                         style="border-radius:6px; overflow:hidden;">
 
-                        <li class="px-3 pt-3 pb-2 border-bottom">
+                        <li class="px-3 pt-3 pb-2 border-bottom profile">
                             <div class="d-flex align-items-center gap-3 mb-2">
                                 <div
                                     class="li-avatar-lg d-flex align-items-center justify-content-center text-white flex-shrink-0 abbr_name">
@@ -87,14 +87,10 @@
                                 <div>
                                     <div class="fw-semibold text-dark lh-sm fs-6 username">
                                     </div>
-                                    <!-- <div class="text-muted lh-sm mt-1 fs-6" id="job_address">Frontend Developer ·
-                                            Cairo, Egypt</div> -->
+
                                 </div>
                             </div>
-                            <a href="#" class="btn btn-light w-100 rounded-pill fw-semibold fs-6"
-                                border-color:var(--li-blue); color:var(--li-blue);">
-                                View Profile
-                            </a>
+
                         </li>
 
                         <li class="border-bottom py-2">
@@ -163,6 +159,7 @@
         </div>
     </nav>
 
+    <!--  add -->
     <div class="modal fade" id="addModal" aria-labelledby="postModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="max-width:560px;">
             <div class="modal-content border-0 rounded-3 overflow-hidden">
@@ -206,7 +203,6 @@
             </div>
         </div>
     </div>
-
     <!-- PROFILE LAYOUT -->
     <div class="profile-layout">
 
@@ -222,15 +218,15 @@
 
                 <div class="profile-top">
                     <div class="avatar-ring">
-                        <span class="abbr_name"></span>
+                        <span class="abbrName"></span>
                         <div class="avatar-overlay"><i class="bi bi-camera-fill"></i></div>
                     </div>
                     <div class="profile-top-actions">
-                        <button class="btn-li-ghost"><i class="bi bi-pencil-fill" style="font-size:.8rem;"></i> Edit
+                        <button class="btn-li-ghost auth"><i class="bi bi-pencil-fill " style="font-size:.8rem;"></i>
+                            Edit
                             profile</button>
                         <button class="btn-li-ghost"><i class="bi bi-share-fill" style="font-size:.8rem;"></i>
                             Share</button>
-                        <button class="btn-li-ghost"><i class="bi bi-three-dots" style="font-size:.9rem;"></i></button>
                     </div>
 
                     <div class="profile-name"></div>
@@ -247,11 +243,16 @@
                     </div>
 
                     <!-- Action buttons for visitors -->
-                    <div class="d-flex gap-2 mt-3 flex-wrap">
-                        <button class="btn-li-primary"><i class="bi bi-person-plus-fill me-1"></i>Connect</button>
-                        <button class="btn-li-outline">Message</button>
-                        <button class="btn-li-ghost"><i class="bi bi-three-dots"></i></button>
+                    <div class="d-flex gap-2 mt-3 flex-wrap parent_btns">
+                        <button class="btn-li-primary not_auth" id="connect_btn">
+                            <i class="bi bi-person-plus-fill me-1">
+
+                            </i>
+                            Connect
+                        </button>
+
                     </div>
+
                 </div>
 
                 <!-- Analytics -->
@@ -277,18 +278,13 @@
                     <div class="section-header">
                         <span class="section-title">Skills</span>
                         <div class="d-flex gap-1">
-                            <button class="section-edit-btn"><i class="bi bi-plus-lg" data-bs-toggle="modal"
+                            <button class="section-edit-btn auth"><i class="bi bi-plus-lg" data-bs-toggle="modal"
                                     data-bs-target="#addModal"></i></button>
                         </div>
                     </div>
 
                     <div id="parent_skills">
-                        <div class="skill-item d-flex">
-                            <div class="skill-name">React.js</div>
 
-                            <button class="btn btn-danger">delete</button>
-
-                        </div>
                     </div>
 
                 </div>

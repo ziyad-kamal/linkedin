@@ -6,6 +6,16 @@ var users = [
         password: "13131313",
         phone: "01124732412",
         skills: [],
+        connections: [],
+    },
+    {
+        id: 2,
+        name: "mohamed",
+        email: "ziyad199523@gmail.com",
+        password: "13131313",
+        phone: "01124732412",
+        skills: [],
+        connections: [],
     },
 ];
 
@@ -19,6 +29,22 @@ var posts = [
             email: "ziyad1995@gmail.com",
             password: "13131313",
             phone: "01124732412",
+        },
+        likes: [1],
+        reposts: [1],
+    },
+
+    {
+        id: 2,
+        content: "i want frontend developer",
+        user: {
+            id: 2,
+            name: "mohamed",
+            email: "ziyad199523@gmail.com",
+            password: "13131313",
+            phone: "01124732412",
+            skills: [],
+            connections: [],
         },
         comments: [
             {
@@ -67,6 +93,15 @@ function authorize() {
     return true;
 }
 
+function redirectIfAuth() {
+    if (getFromDatabase("token")) {
+        window.location.href = "http://127.0.0.1:5500/views/home.html";
+
+        return false;
+    }
+    return true;
+}
+
 function isOwner(recordId) {
     var authUser = getFromDatabase("authUser");
     if (authUser.id !== Number(recordId)) {
@@ -74,4 +109,12 @@ function isOwner(recordId) {
         return false;
     }
     return true;
+}
+
+if (!getFromDatabase("users")) {
+    saveOnDatabase("users", users);
+}
+
+if (!getFromDatabase("posts")) {
+    saveOnDatabase("posts", posts);
 }

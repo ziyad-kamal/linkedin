@@ -4,7 +4,7 @@ function initializePage() {
     }
 
     var postModal = new bootstrap.Modal(document.getElementById("postModal"));
-    var authUser = getFromDatabase("authUser");
+
     function displayPost(post) {
         var postCard = ` <div class="card post-card shadow-sm border-0 mt-3 " id="post${post.id}">
 
@@ -19,7 +19,10 @@ function initializePage() {
 
                             <div class="flex-grow-1 overflow-hidden">
                                 <div class="d-flex align-items-center gap-1 flex-wrap">
-                                    <span class="poster-name">${post.user.name}</span>
+                                    <a class="profile_link" href='/views/profile.html?id=${post.user.id}'>
+                                        <span class="poster-name">${post.user.name}</span>
+                                    </a>
+
                                     <span class="poster-meta">• 2 days</span>
                                 </div>
 
@@ -121,7 +124,8 @@ function initializePage() {
         }
         var posts = getFromDatabase("posts") || [];
 
-        var content = document.getElementById("postTextarea").value;
+        var contentEle = document.getElementById("postTextarea");
+        var content = contentEle.value;
         var id = posts.length + 1;
         var authUser = getFromDatabase("authUser");
 
@@ -130,6 +134,7 @@ function initializePage() {
             return;
         }
 
+        contentEle.value = "";
         var newPost = {
             id: id,
             content: content,
